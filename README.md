@@ -27,7 +27,15 @@ ProyectoIntegrador/
 │   │       ├── product.py
 │   │       └── sale.py
 │   ├── tests/
-│      └── test_models.py
+│   │   └── test_models.py
+├── Avance2/
+│   ├── patterns/
+│   │   ├── builder_SQL.py
+│   │   ├── singleton_SQL.py
+│   │   └── strategy_SQL.py
+│   ├── tests/
+│   │   └── test_patterns.py
+│   └── main.ipynb
 ├── .env
 ├── .gitignore
 ├── README.md
@@ -51,11 +59,11 @@ Clonar el repositorio:
     git clone <URL_DEL_REPOSITORIO>
     cd HenryProyectoIntegrador
 
-Configurar el entorno virtual:
+# Configurar el entorno virtual:
     python -m venv venv
     source venv/bin/activate  # En Windows: venv\Scripts\activate
 
-Instalar dependencias:
+# Instalar dependencias:
     pip install -r requirements.txt
 
 # Configurar la base de datos:
@@ -73,13 +81,8 @@ DB_USER=<tu_usuario>
 DB_PASSWORD=<tu_contraseña>
 DB_NAME=sales_company
 
-# Uso
 
-Ejecutar el script principal:
-    Los modelos en Avance1/src/models/ representan las entidades de la base de datos (categories, countries, cities, customers, employees, products, sales) y están mapeados utilizando SQLAlchemy para interactuar con la base de datos.
-    Usa las clases definidas en Avance1/src/models/ para realizar operaciones como consultas, inserciones o análisis de datos con pandas.
-
-# Ejecutar pruebas unitarias
+# Ejecutar pruebas unitarias del avance 1
 
 Las pruebas unitarias están en Avance1/tests/test_models.py. Ejecútalas con:
     pytest Avance1/tests/
@@ -93,11 +96,64 @@ El archivo Avance1/sql/load_data.sql realiza las siguientes acciones:
 
 # Estructura de las Clases
 
-Las clases en Avance1/src/models/ representan las entidades de la base de datos y están diseñadas con SQLAlchemy para facilitar el mapeo objeto-relacional. Cada clase (por ejemplo, Category, Country, Sale) corresponde a una tabla en la base de datos y permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar).
+Las clases en Avance1/src/models/ representan las entidades de la base de datos y tienen metodos relevantes para el negocio.
 
 # Analisis de Datos
 
-El proyecto utiliza pandas para manipular y analizar los datos cargados desde la base de datos. Puedes realizar consultas SQL y convertir los resultados en DataFrames para análisis avanzados, como cálculos de ventas totales, análisis por categoría o tendencias por fecha.
+El proyecto utiliza pandas para manipular y analizar los datos cargados desde la base de datos. Puedes realizar consultas SQL y convertir los resultados en DataFrames para análisis avanzados.
+
+# Patrones de Diseño Aplicados
+
+En la segunda etapa del proyecto (Avance2) se implementaron patrones de diseño para mejorar la modularidad, mantenimiento y escalabilidad del sistema, enfocándose en la separación de responsabilidades y la reutilización del código.
+
+# Singleton - MySQLConnection
+    Descripción: Este patrón asegura que la conexión a la base de datos MySQL sea única en toda la aplicación, evitando múltiples conexiones simultáneas que puedan saturar recursos o generar inconsistencias.
+
+    Beneficios:
+
+    Control centralizado de la conexión a la base de datos.
+
+    Mejora en la gestión de recursos y desempeño.
+
+    Facilita cambios futuros en la configuración de la conexión en un único lugar.
+
+# Builder - QueryBuilder
+    Descripción: Permite construir consultas SQL complejas de forma dinámica y legible mediante métodos encadenados, facilitando la composición modular de cláusulas SQL.
+
+    Beneficios:
+
+    Claridad en la construcción de consultas, evitando errores en concatenaciones manuales.
+
+    Flexibilidad para crear consultas personalizadas sin duplicar código.
+
+    Facilita la extensión y mantenimiento del código relacionado a consultas SQL.
+
+# Strategy - KPIBaseStrategy y KPIContext
+    Descripción: Define una familia de algoritmos (cálculos de KPIs), encapsulándolos en clases independientes que pueden ser intercambiadas en tiempo de ejecución según la   necesidad.
+    
+    Beneficios:
+    
+    Modularidad en la implementación de diferentes KPIs, permitiendo agregar nuevos sin modificar la lógica existente.
+    
+    Facilita pruebas unitarias específicas para cada KPI.
+    
+    Mejora la escalabilidad y adaptabilidad del sistema frente a nuevos requerimientos analíticos.
+
+# Pruebas Unitarias
+    Se incluyó un conjunto de pruebas para verificar la correcta implementación y funcionamiento de los patrones y la integración con la base de datos:
+
+    Singleton: Valida que la conexión a la base de datos sea efectivamente única.
+
+    Builder: Verifica la estructura de las consultas SQL generadas dinámicamente.
+
+    Strategy: Comprueba el cálculo correcto de KPIs como ventas totales, ventas por categoría y conteo de clientes.
+
+    Estas pruebas aseguran la robustez y calidad del código, facilitando futuros desarrollos y mantenimiento.
+
+# Ejecutar pruebas unitarias del avance 2
+
+Las pruebas unitarias están en Avance2/tests/test_patterns.py. Ejecútalas con:
+    pytest Avance2/tests/
 
 # Licencia
 Este proyecto está bajo la Licencia MIT.
