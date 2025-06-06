@@ -77,7 +77,7 @@ CREATE TABLE sales (
 
 
 -- 3. Cargar los datos desde los archivos CSV
-SHOW VARIABLES LIKE 'secure_file_priv';  -- veo la ruta en donde debo dejar los csv para que se puedan cargar exitosamente
+-- SHOW VARIABLES LIKE 'secure_file_priv';  descomentar esto para ver la ruta en donde debo dejar los csv para que se puedan cargar exitosamente
 
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/categories.csv'
 INTO TABLE categories
